@@ -3,7 +3,7 @@ import java.util.Random;
 public class Methods 
 {
 	//Randomized-Select method
-	public int randomizedSelect(int[]a , int start , int end , int index)
+	public static int randomizedSelect(int[]a , int start , int end , int index)
 	{
 		int k,q;
 		if(start == end)
@@ -32,7 +32,7 @@ public class Methods
 	}
 	
 	//Randomized Partition method
-	public int randomizedPartition(int[]a ,int start ,int end)
+	public static int randomizedPartition(int[]a ,int start ,int end)
 	{
 		int i;
 		Random rn = new Random();
@@ -42,7 +42,7 @@ public class Methods
 	}
 	
 	//Partition method
-	public int partition(int []a , int start , int end)
+	public static int partition(int []a , int start , int end)
 	{
 		int i;
 		int x = a[end];
@@ -60,12 +60,48 @@ public class Methods
 	}
 	
 	//a basic swap inside array method
-	public void swap(int[]a , int index1 , int index2)
+	public static void swap(int[]a , int index1 , int index2)
 	{
 		int temp;
 		temp = a[index1];
 		a[index1] = a[index2];
 		a[index2] = temp;
+	}
+	
+	//QuickSort method
+	public static void quickSort(int[]a , int start , int end ,int indPos)
+	{
+		QuickSort.rec_counter++; //increase recursion counter
+		int part;
+		if(indPos != 1) //k= (m/2 or m/4 or m/8)
+		{
+			if(start < end)
+			{
+				part = randomizedSelect(a, start, end , (int)Math.ceil((end-start)/indPos)+start);
+				quickSort(a , start , part-1 , (int)Math.ceil((end-start)/indPos)+start);
+				quickSort(a, part+1, end, (int)Math.ceil((end-start)/indPos)+start);
+			}
+		}
+		else //k=1
+		{
+			if(start < end)
+			{
+				part = randomizedSelect(a, start, end , 1);
+				quickSort(a , start , part-1 , 1);
+				quickSort(a, part+1, end, 1);
+			}
+		}
+		
+	}
+	
+	//shuffle method
+	public static void shuffle(int[]a)
+	{
+		Random rnd = new Random();
+		for(int i = a.length ; i >0 ; i--)
+		{
+			swap(a , i-1 , rnd.nextInt(i));
+		}
 	}
 }
 
