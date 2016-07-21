@@ -10,7 +10,7 @@ public class Methods
 		{
 			return a[start];
 		}
-		q = randomizedPartition(a , start , end);
+		q = partition(a , start , end);
 		k = q-start+1;
 		if(index == k) //the pivot value is the index we are looking for
 		{
@@ -24,22 +24,13 @@ public class Methods
 			}
 			else
 			{
-				return randomizedSelect(a, q+1, end, index-k); //search from q+1 to end
+				return randomizedSelect(a, q, end, index-k); //search from q+1 to end
 			}
 		}
 			
 		
 	}
 	
-	//Randomized Partition method
-	public static int randomizedPartition(int[]a ,int start ,int end)
-	{
-		int i;
-		Random rn = new Random();
-		i = rn.nextInt(end - start +1) + start; //generate a random number to i , from start to end
-		swap(a , end , i);
-		return partition(a , start , end);
-	}
 	
 	//Partition method
 	public static int partition(int []a , int start , int end)
@@ -69,17 +60,18 @@ public class Methods
 	}
 	
 	//QuickSort method
-	public static void quickSort(int[]a , int start , int end ,int indPos)
+	public static void quickSort(int[]a , int start , int end ,double indPos)
 	{
 		QuickSort.rec_counter++; //increase recursion counter
 		int part;
+		int index = (int)Math.ceil((end-start)/indPos)+start; //the index we want to find
 		if(indPos != 1) //k= (m/2 or m/4 or m/8)
 		{
 			if(start < end)
 			{
-				part = randomizedSelect(a, start, end , (int)Math.ceil((end-start)/indPos)+start);
-				quickSort(a , start , part-1 , (int)Math.ceil((end-start)/indPos)+start);
-				quickSort(a, part+1, end, (int)Math.ceil((end-start)/indPos)+start);
+				part = randomizedSelect(a, start, end ,index );
+				quickSort(a , start , part-1 , indPos);
+				quickSort(a, part+1, end, indPos);
 			}
 		}
 		else //k=1
@@ -92,6 +84,7 @@ public class Methods
 			}
 		}
 		
+
 	}
 	
 	//shuffle method
